@@ -1,0 +1,14 @@
+{% load crispy_forms_filters %}
+
+<form method="get" action="" class="form-inline my-2 my-lg-0 align-items-center">
+  <div class="input-group">
+    {{ search_form|crispy }}
+  </div>
+  <div class="input-group-append" style="margin-left: 10px;">
+    <button type="submit" class="btn">
+      <h2>
+        🔍
+      </h2>
+    </button>
+  </div>
+</form>

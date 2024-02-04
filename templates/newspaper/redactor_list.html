@@ -2,13 +2,15 @@
 
 {% block content %}
   <br>
-    <h1 class="display-4">
-    Redactor List
+  <h1 class="display-4">
+    Topic List
   </h1>
   <h1>
-    <a style="float: right" href="{% url "newspaper:redactor-create" %}">
+    <a style="float: right" href="{% url "newspaper:newspaper-create" %}">
       Create
     </a>
+
+    {% include "search_form.html" %}
   </h1>
 
     {% if redactor_list %}
