@@ -3,6 +3,7 @@ from datetime import date
 from django.contrib.auth.models import AbstractUser
 
 from django.db import models
+from django.urls import reverse
 
 from newspaper_agency_project import settings
 
@@ -26,6 +27,11 @@ class Redactor(AbstractUser):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} ({self.username})"
+
+    def get_absolute_url(self):
+        return reverse(
+            "newspaper:redactor-detail", kwargs={"pk": self.pk}
+        )
 
 
 class Newspaper(models.Model):
