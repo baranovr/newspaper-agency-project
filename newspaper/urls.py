@@ -18,12 +18,18 @@ from django.contrib import admin
 from django.urls import path, include
 
 from newspaper.views import (
-    index,
+    index, TopicListView, NewspaperListView, RedactorListView,
 )
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("__debug__/", include("debug_toolbar.urls")),
     path("", index, name="index"),
-
+    path("topics/", TopicListView.as_view(), name="topic-list"),
+    path("newspapers/", NewspaperListView.as_view(), name="newspaper-list"),
+    path(
+        "redactors/",
+        RedactorListView.as_view(),
+        name="redactor-list"
+    ),
 ]
