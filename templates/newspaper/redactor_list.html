@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <br>
+    <h1>
+    Redactor List
+  </h1>
+
+    {% if redactor_list %}
+    <table class="table">
+      <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Experience</th>
+        <th>Update</th>
+        <th>Delete</th>
+      </tr>
+
+    {% for redactor in redactor_list %}
+      <tr>
+        <td>{{ redactor.id }}</td>
+        <td>
+          <a href="{{ redactor.get_absolute_url }}">
+            {{ redactor.username }} {% if user == redactor %} (Me){% endif %}
+          </a>
+        </td>
+        <td>{{ redactor.first_name }}</td>
+        <td>{{ redactor.last_name }}</td>
+        <td>
+          {% if redactor.years_of_experience is None %}
+            no experience
+          {% elif redactor.years_of_experience == 1 %}
+            {{ redactor.years_of_experience }} year
+          {% else %}
+            {{ redactor.years_of_experience }} years
+          {% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+
+    </table>
+    {% else %}
+      <p>There are no redactors in the service.</p>
+    {% endif %}
+{% endblock %}
