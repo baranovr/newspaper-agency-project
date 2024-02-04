@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h1 class="display-4">
+      Newspaper: <em><strong>{{ newspaper.title}}</strong></em>
+    </h1>
+    <h4 style="color: dimgray">
+      <em>Related topic: <strong>{{ newspaper.topic.name }}</strong></em>
+    </h4>
+    <br>
+    <h2 class="mt-4">Publishers</h2>
+    <hr class="my-4">
+    <ul class="list-group">
+      {% for redactor in newspaper.publishers.all %}
+        <li class="list-group-item">
+          {{ redactor.first_name }} {{ redactor.last_name }} ({{ redactor.username }})
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endblock %}
