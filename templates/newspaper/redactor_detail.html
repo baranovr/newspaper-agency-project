@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <p>
+    <strong>
+      <h1 class="display-4">
+        <strong>Username:</strong>
+        <em>{{ redactor.username }}</em>
+      </h1>
+      <hr class="my-4">
+    </strong>
+      <strong>First name:</strong> {{ redactor.first_name }}<br>
+      <strong>Last name:</strong> {{ redactor.last_name }}<br>
+      <hr>
+      <strong>Experience:</strong>
+    {% if redactor.years_of_experience is None %}
+      <em>no experience</em>
+    {% elif redactor.years_of_experience == 1 %}
+      <em>{{ redactor.years_of_experience }} year</em>
+    {% else %}
+      <em>{{ redactor.years_of_experience }} years</em>
+    {% endif %}
+    <hr>
+    <strong>Date joined:</strong>
+    <em>{{ redactor.date_joined }}</em>
+
+    <hr>
+    <br>
+    <br>
+
+    <h2>
+      {{ redactor.username }} is the author of:
+    </h2>
+
+  {% for newspaper in redactor.newspapers.all %}
+    <p>
+      <strong>Id: </strong><em>{{ newspaper.id }}</em><br>
+      <strong>Newspaper title: </strong><em>{{ newspaper.title}}</em>
+    </p>
+    <hr>
+  {% empty %}
+    <p style="color: red">
+      {{ redactor.username }} is not the author of any newspaper!
+    </p>
+  {% endfor %}
+{% endblock %}
