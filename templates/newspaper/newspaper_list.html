@@ -2,8 +2,13 @@
 
 {% block content %}
   <br>
-  <h1>
+  <h1 class="display-4">
     Newspaper List
+  </h1>
+  <h1>
+    <a style="float: right" href="{% url "newspaper:newspaper-create" %}">
+      Create
+    </a>
   </h1>
 
   {% if newspaper_list %}
@@ -21,16 +26,30 @@
         <tr>
           <td>{{ newspaper.id }}</td>
           <td>
-            {{ newspaper.title }}
+            <em>
+              <a href="{% url "newspaper:newspaper-detail" pk=newspaper.id %}">
+                {{ newspaper.title }}
+              </a>
+            </em>
           </td>
           <td>
             {{ newspaper.topic.name }}
           </td>
           <td>{{ newspaper.publishers.count }}</td>
+          <td>
+            <a href="{% url "newspaper:newspaper-update" pk=newspaper.id%}">
+              <strong>Update</strong>
+            </a>
+          </td>
+          <td>
+            <a style="color: red" href="{% url "newspaper:newspaper-delete" pk=newspaper.id%}">
+              <strong>Delete</strong>
+            </a>
+          </td>
         </tr>
       {% endfor %}
     </table>
   {% else %}
-    <p>There are no newspapers in taxi</p>
+    <p style="color: red">There are no newspapers in taxi</p>
   {% endif %}
 {% endblock %}
