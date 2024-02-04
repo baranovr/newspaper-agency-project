@@ -9,6 +9,7 @@ class RedactorCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = Redactor
         fields = UserCreationForm.Meta.fields + (
+            "username",
             "first_name",
             "last_name",
             "email",
