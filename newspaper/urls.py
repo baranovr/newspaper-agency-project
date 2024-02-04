@@ -73,7 +73,7 @@ urlpatterns = [
         name="redactor-detail"
     ),
     path(
-        "newspapers/<int:pk>/update/",
+        "redactors/<int:pk>/update/",
         RedactorUpdateView.as_view(),
         name="redactor-update"
     ),

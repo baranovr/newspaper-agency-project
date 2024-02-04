@@ -41,21 +41,21 @@ class TopicListView(LoginRequiredMixin, generic.ListView):
 class TopicCreateView(LoginRequiredMixin, generic.CreateView):
     model = Topic
     fields = "__all__"
-    success_url = reverse_lazy("newspaper:topic-create")
+    success_url = reverse_lazy("newspaper:topic-list")
     template_name = "newspaper/topic_form.html"
 
 
 class TopicUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Topic
     fields = "__all__"
-    success_url = reverse_lazy("newspaper:topic-update")
+    success_url = reverse_lazy("newspaper:topic-list")
     template_name = "newspaper/topic_form.html"
 
 
 class TopicDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Topic
     fields = "__all__"
-    success_url = reverse_lazy("newspaper:topic-delete")
+    success_url = reverse_lazy("newspaper:topic-list")
     template_name = "newspaper/topic_confirm_delete.html"
 
 
@@ -72,21 +72,21 @@ class NewspaperDetailView(LoginRequiredMixin, generic.DetailView):
 class NewspaperCreateView(LoginRequiredMixin, generic.CreateView):
     model = Newspaper
     fields = "__all__"
-    success_url = reverse_lazy("newspaper:newspaper-create")
+    success_url = reverse_lazy("newspaper:newspaper-list")
     template_name = "newspaper/newspaper_form.html"
 
 
 class NewspaperUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Newspaper
     fields = "__all__"
-    success_url = reverse_lazy("newspaper:newspaper-update")
+    success_url = reverse_lazy("newspaper:newspaper-list")
     template_name = "newspaper/newspaper_form.html"
 
 
 class NewspaperDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Newspaper
     fields = "__all__"
-    success_url = reverse_lazy("newspaper:newspaper-delete")
+    success_url = reverse_lazy("newspaper:newspaper-list")
     template_name = "newspaper/newspaper_confirm_delete.html"
 
 
@@ -108,12 +108,12 @@ class RedactorCreateView(LoginRequiredMixin, generic.CreateView):
 class RedactorUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Redactor
     fields = "__all__"
-    success_url = reverse_lazy("newspaper:redactor-update")
+    success_url = reverse_lazy("newspaper:redactor-list")
     template_name = "newspaper/redactor_form.html"
 
 
 class RedactorDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Redactor
     fields = "__all__"
-    success_url = reverse_lazy("newspaper:redactor-delete")
+    success_url = reverse_lazy("newspaper:redactor-list")
     template_name = "newspaper/redactor_confirm_delete.html"
