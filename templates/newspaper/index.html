@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+  <div class="container">
+    <h1 class="display-4">Newspaper Agency Home</h1>
+    <p class="lead">
+      Welcome to the world of information and current events with Newspaper Agency!
+    </p>
+    <div class="card mt-4">
+      <div class="body">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <h2 class="card-title">
+            General information about content:
+          </h2>
+        </li>
+        <ul class="list-group">
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            Newspapers
+            <span class="badge badge-primary badge-pill">
+              {{ newspapers_count }}
+            </span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            Redactors
+            <span class="badge badge-primary badge-pill">
+              {{ redactors_count }}
+            </span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            Topics
+            <span class="badge badge-primary badge-pill">
+              {{ topics_count }}
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <p class="mt-4">
+      You have visited this page {{ num_visits }} time{{ num_visits|pluralize }}.
+    </p>
+  </div>
+{% endblock %}
