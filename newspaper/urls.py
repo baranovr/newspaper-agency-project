@@ -20,7 +20,7 @@ from django.urls import path, include
 from newspaper.views import (
     index, TopicListView, NewspaperListView, RedactorListView,
     TopicCreateView, TopicUpdateView, TopicDeleteView, NewspaperDetailView,
-    NewspaperCreateView, NewspaperUpdateView,
+    NewspaperCreateView, NewspaperUpdateView, NewspaperDeleteView,
 )
 
 urlpatterns = [
