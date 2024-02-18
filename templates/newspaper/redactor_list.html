@@ -1,64 +1,241 @@
-{% extends "base.html" %}
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title %} Publishers {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block body_class %} blog-author bg-gray-100 {% endblock body_class %}
 
 {% block content %}
-  <br>
-  <h1 class="display-4">
-    Redactor List
-  </h1>
-  <h1>
-    <a style="float: right" href="{% url "newspaper:redactor-create" %}">
-      Create
+
+  {% include "includes/navigation-light.html" %}
+
+  <link rel="stylesheet" type="text/css"
+        href="{% static 'assets/css/styles.css' %}">
+
+  <header class="bg-gradient-dark">
+    <div class="page-header section-height-75"
+         style="background-image: url('{{ ASSETS_ROOT }}/img/publisher.jpg')">
+      <span class="mask bg-gradient-dark opacity-7"></span>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8 text-center mx-auto my-auto">
+            <h1 class="text-white">List of Publishers</h1>
+            <p class="lead mb-4 text-white opacity-8">
+              Experience quality journalism from renowned publishers across
+              the globe.
+              With a commitment to delivering reliable and up-to-date news
+              content,
+              our platform partners with respected publishers, providing you
+              with
+              access to credible sources you can trust. You can also become a
+              publisher!
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="position-absolute w-100 z-index-1 bottom-0">
+        <svg class="waves" xmlns="http://www.w3.org/2000/svg"
+             xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 40"
+             preserveAspectRatio="none" shape-rendering="auto">
+          <defs>
+            <path id="gentle-wave"
+                  d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"/>
+          </defs>
+          <g class="moving-waves">
+            <use xlink:href="#gentle-wave" x="48" y="-1"
+                 fill="rgba(255,255,255,0.40"/>
+            <use xlink:href="#gentle-wave" x="48" y="3"
+                 fill="rgba(255,255,255,0.35)"/>
+            <use xlink:href="#gentle-wave" x="48" y="5"
+                 fill="rgba(255,255,255,0.25)"/>
+            <use xlink:href="#gentle-wave" x="48" y="8"
+                 fill="rgba(255,255,255,0.20)"/>
+            <use xlink:href="#gentle-wave" x="48" y="13"
+                 fill="rgba(255,255,255,0.15)"/>
+            <use xlink:href="#gentle-wave" x="48" y="16"
+                 fill="rgba(255,255,255,1"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </header>
+
+  <section class="py-sm-5 py-5 position-relative">
+    <a href="{% url "newspaper:redactor-create" %}">
+      <button class="btn btn-outline-success"
+              style="float: right; margin-right: 170px; font-size: 20px; padding: 10px 20px;">
+        Create
+      </button>
     </a>
 
-    {% include "search_form.html" %}
-  </h1>
+
+    <div class="row">
+      <div class="col-md-8 text-left mb-5 mt-5">
+
+        <!-- Search Form -->
+        <div class="form-group mt-3">
+          <input type="text" id="searchInput" class="form-control"
+                 placeholder="Search by username..."
+                 style="width: 400px; margin-left: 29%"
+                 oninput="searchRedactors()">
+        </div>
+        <!-- End of Search Form -->
+
+      </div>
+    </div>
 
     {% if redactor_list %}
-    <table class="table">
-      <tr>
-        <th>ID</th>
-        <th>Username</th>
-        <th>First name</th>
-        <th>Last name</th>
-        <th>Experience</th>
-        <th>Update</th>
-        <th>Delete</th>
-      </tr>
-
-    {% for redactor in redactor_list %}
-      <tr>
-        <td>{{ redactor.id }}</td>
-        <td>
-          <a href="{{ redactor.get_absolute_url }}">
-            {{ redactor.username }} {% if user == redactor %} (Me){% endif %}
-          </a>
-        </td>
-        <td>{{ redactor.first_name }}</td>
-        <td>{{ redactor.last_name }}</td>
-        <td>
-          {% if redactor.years_of_experience is None %}
-            no experience
-          {% elif redactor.years_of_experience == 1 %}
-            {{ redactor.years_of_experience }} year
-          {% else %}
-            {{ redactor.years_of_experience }} years
-          {% endif %}
-        </td>
-        <td>
-          <a href="{% url "newspaper:redactor-update" pk=redactor.id%}">
-            <strong>Update</strong>
-          </a>
-        </td>
-        <td>
-          <a style="color: red" href="{% url "newspaper:redactor-delete" pk=redactor.id%}">
-            <strong>Delete</strong>
-          </a>
-        </td>
-      </tr>
-    {% endfor %}
-
-    </table>
+      <div class="container">
+        <div class="row" id="redactorList">
+          {% for redactor in redactor_list %}
+            <div class="col-12 mx-auto">
+              <div class="row py-lg-3 py-5">
+                <div
+                    class="col-lg-7 col-md-4 z-index-2 position-relative px-md-5 px-sm-5 mt-sm-0 mt-4"
+                    style="border: 1px solid #ccc; padding: 20px; margin: 20px;">
+                  <div
+                      class="d-flex justify-content-between align-items-center mb-2">
+                    {% if redactor.first_name and redactor.last_name %}
+                      <div class="mb-4">
+                        <h4 class="mb-0">
+                          <strong>First
+                            name:</strong> {{ redactor.first_name }}
+                          <br>
+                          <strong>Last name:</strong> {{ redactor.last_name }}
+                        </h4>
+                      </div>
+                    {% else %}
+                      <h5 class="mb-0"><strong>Username:</strong>
+                        <em>{{ redactor.username }}</em></h5><br>
+                    {% endif %}
+                    <div class="d-block">
+                      <a href="{% url "newspaper:redactor-update" pk=redactor.id %}">
+                        <button type="button" class="btn btn-info">
+                          Update
+                        </button>
+                      </a>
+                      <a href="{% url "newspaper:redactor-delete" pk=redactor.id %}">
+                        <button type="button" class="btn btn-warning">
+                          Delete
+                        </button>
+                      </a>
+                    </div>
+                  </div>
+                  {% if redactor.first_name and redactor.last_name %}
+                    <div class="mb-4">
+                      <h5 class="mb-0" style="color: #252f40">
+                        <strong>Username: </strong>
+                        <em>{{ redactor.username }}</em>
+                      </h5>
+                    </div>
+                  {% endif %}
+                  <p class="text-lg mb-0" style="color: black">Joining
+                    date:</p>
+                  <p class="text-lg mb-0">{{ redactor.date_joined }}</p>
+                  <p>
+                  <p style="color: #7928CA">ID: {{ redactor.id }}</p>
+                  <a href="{% url "newspaper:redactor-detail" pk=redactor.id %}"
+                     class="text-info icon-move-right">View details
+                    <i class="fas fa-arrow-right text-sm ms-1"></i>
+                  </a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
     {% else %}
-      <p style="color: red">There are no redactors in the service.</p>
+      <h6 style="color: red">There are no publishers in the service!</h6>
     {% endif %}
-{% endblock %}
+
+    <!-- Pagination links -->
+    {% if is_paginated %}
+      <div class="pagination-wrapper">
+        <div class="pagination">
+          {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+              <li class="page-numbers current"><a class="page-link"
+                                                  href="#">{{ num }}</a></li>
+            {% else %}
+              <li class="page-numbers"><a class="page-link"
+                                          href="?page={{ num }}">{{ num }}</a>
+              </li>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="pagination-wrapper">
+        {% if page_obj.has_previous %}
+          <a class="prev page-numbers"
+             href="?page={{ page_obj.previous_page_number }}">Prev</a>
+        {% endif %}
+
+        {% if page_obj.has_next %}
+          <a class="next page-numbers"
+             href="?page={{ page_obj.next_page_number }}">Next</a>
+        {% endif %}
+      </div>
+
+    {% else %}
+    {% endif %}
+
+  </section>
+
+  <button onclick="goToTop()" id="btnGoToTop" title="Go to top">Go to top 👆
+  </button>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}
+
+  <script src="{{ ASSETS_ROOT }} /js/soft-design-system.min.js?v=1.0.1"
+          type="text/javascript"></script>
+
+  <script>
+      function goToTop() {
+          window.scrollTo({
+              top: 0,
+              behavior: "smooth"
+          });
+      }
+
+      window.onscroll = function () {
+          scrollFunction();
+      };
+
+      function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+              document.getElementById("btnGoToTop").style.display = "block";
+          } else {
+              document.getElementById("btnGoToTop").style.display = "none";
+          }
+      }
+  </script>
+
+  <script>
+      function searchRedactors() {
+          var input, filter, redactors, redactor, i, txtValue;
+          input = document.getElementById("searchInput");
+          filter = input.value.toUpperCase();
+          redactors = document.getElementById("redactorList").getElementsByClassName("row");
+          for (i = 0; i < redactors.length; i++) {
+              redactor = redactors[i].getElementsByTagName("em")[0];
+              if (redactor) {
+                  txtValue = redactor.textContent || redactor.innerText;
+                  if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                      redactors[i].style.display = "";
+                  } else {
+                      redactors[i].style.display = "none";
+                  }
+              }
+          }
+      }
+  </script>
+
+{% endblock javascripts %}

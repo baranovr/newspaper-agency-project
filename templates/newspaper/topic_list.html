@@ -1,49 +1,332 @@
-{% extends "base.html" %}
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title %} Topics {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block body_class %} about-us {% endblock body_class %}
 
 {% block content %}
-  <br>
-  <h1 class="display-4">
-    Topic List
-  </h1>
-  <h1>
-    <a style="float: right" href="{% url "newspaper:topic-create" %}">
-      Create
-    </a>
 
-    {% include "search_form.html" %}
-  </h1>
+  {% include "includes/navigation-transparent.html" %}
 
-    {% if topic_list %}
-      <table class="table">
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Update</th>
-          <th>Delete</th>
-        </tr>
+  <link rel="stylesheet" type="text/css"
+        href="{% static 'assets/css/styles.css' %}">
 
-        {% for topic in topic_list %}
-            <tr>
-              <td>
-                  {{ topic.id }}
-              </td>
-              <td>
-                  {{ topic.name }}
-              </td>
-              <td>
-                <a href="{% url "newspaper:topic-update" pk=topic.id %}">
-                  <strong>Update</strong>
-                </a>
-              </td>
-              <td>
-                <a style="color: red" href="{% url "newspaper:topic-delete" pk=topic.id %}">
-                  <strong>Delete</strong>
-                </a>
-              </td>
-          </tr>
-        {% endfor %}
-      </table>
-    {% else %}
-        <p style="color: red">There are no topics in the service.</p>
-    {% endif %}
-{% endblock %}
+  <!-- -------- START HEADER 7 w/ text and video ------- -->
+
+  <header class="bg-gradient-faded-dark">
+    <div class="page-header section-height-75"
+         style="background-image: url('{{ ASSETS_ROOT }}/img/topics.jpg')">
+      <span class="mask bg-gradient-faded-dark opacity-7"></span>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8 text-center mx-auto my-auto">
+            <h1 class="text-white">List of Topics</h1>
+            <p class="lead mb-4 text-white opacity-8">
+              Explore the topics that matter most to you with ease.
+              Our carefully curated sections divide newspapers into relevant
+              categories,
+              ensuring you can effortlessly discover content tailored to your
+              interests,
+              whether it's politics, sports, entertainment, or beyond.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="position-absolute w-100 z-index-1 bottom-0">
+        <svg class="waves" xmlns="http://www.w3.org/2000/svg"
+             xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 40"
+             preserveAspectRatio="none" shape-rendering="auto">
+          <defs>
+            <path id="gentle-wave"
+                  d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"/>
+          </defs>
+          <g class="moving-waves">
+            <use xlink:href="#gentle-wave" x="48" y="-1"
+                 fill="rgba(255,255,255,0.40"/>
+            <use xlink:href="#gentle-wave" x="48" y="3"
+                 fill="rgba(255,255,255,0.35)"/>
+            <use xlink:href="#gentle-wave" x="48" y="5"
+                 fill="rgba(255,255,255,0.25)"/>
+            <use xlink:href="#gentle-wave" x="48" y="8"
+                 fill="rgba(255,255,255,0.20)"/>
+            <use xlink:href="#gentle-wave" x="48" y="13"
+                 fill="rgba(255,255,255,0.15)"/>
+            <use xlink:href="#gentle-wave" x="48" y="16"
+                 fill="rgba(255,255,255,1"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </header>
+  <!-- -------- END HEADER 7 w/ text and video ------- -->
+
+  <!-- -------- START Features w/ pattern background & stats & rocket -------- -->
+  <section
+      class="pt-sm-8 pb-5 position-relative bg-gradient-faded-dark overflow-hidden">
+    <div class="position-absolute w-100 z-inde-1 top-0 mt-n3">
+      <svg width="100%" viewBox="0 -2 1920 157" version="1.1"
+           xmlns="http://www.w3.org/2000/svg"
+           xmlns:xlink="http://www.w3.org/1999/xlink">
+        <title>wave-down</title>
+        <g id="Page-1" stroke="none" stroke-width="1" fill="none"
+           fill-rule="evenodd">
+          <g id="Artboard" fill="#FFFFFF" fill-rule="nonzero">
+            <g id="wave-down">
+              <path
+                  d="M0,60.8320331 C299.333333,115.127115 618.333333,111.165365 959,47.8320321 C1299.66667,-15.5013009 1620.66667,-15.2062179 1920,47.8320331 L1920,156.389409 L0,156.389409 L0,60.8320331 Z"
+                  id="Path-Copy-2"
+                  transform="translate(960.000000, 78.416017) rotate(180.000000) translate(-960.000000, -78.416017) "></path>
+            </g>
+          </g>
+        </g>
+      </svg>
+    </div>
+
+    <div class="container">
+
+      <a href="{% url "newspaper:topic-create" %}">
+        <button class="btn btn-outline-success"
+                style="float: right; margin-right: 15px; margin-top: 30px; font-size: 20px; padding: 10px 20px;">
+          Create
+        </button>
+      </a>
+
+      <div class="row">
+        <div class="col-md-8 text-left mb-5 mt-5">
+          <h3 class="text-white z-index-1 position-relative">Topics</h3>
+          <p class="text-white opacity-8 mb-0">Here you can see all the topics
+            we have.</p>
+
+          <!-- Search Form -->
+          <div class="form-group mt-3">
+            <input type="text" id="searchInput" class="form-control"
+                   placeholder="Search by name..." style="width: 400px;"
+                   oninput="searchTopics()">
+          </div>
+          <!-- End of Search Form -->
+
+        </div>
+      </div>
+
+      {% if topic_list %}
+        <div class="container">
+          <div class="row justify-content-center" id="topicList">
+            {% for topic in topic_list %}
+              <div class="col-lg-6 col-md-8 col-sm-10 col-12 mb-4">
+                <div class="card card-profile overflow-hidden">
+                  <div class="card-body">
+                    <h5 class="mb-0"><strong>Name:</strong> {{ topic.name }}
+                    </h5>
+                    <h6 class="text-info"><strong>Count of corresponding
+                      newspapers:</strong> {{ topic.newspapers.count }}</h6>
+                    <br>
+                    <a href="{% url "newspaper:topic-update" pk=topic.id %}">
+                      <button type="button" class="btn btn-info">Update
+                      </button>
+                    </a>
+                    <a href="{% url "newspaper:topic-delete" pk=topic.id %}">
+                      <button type="button" class="btn btn-warning">Delete
+                      </button>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+
+          <!-- Pagination -->
+          {% if is_paginated %}
+            <div class="pagination-wrapper">
+              <div class="pagination">
+
+                {% for num in page_obj.paginator.page_range %}
+                  {% if page_obj.number == num %}
+                    <li class="page-numbers current"><a class="page-link"
+                                                        href="#">{{ num }}</a>
+                    </li>
+                  {% else %}
+                    <li class="page-numbers"><a class="page-link"
+                                                href="?page={{ num }}">{{ num }}</a>
+                    </li>
+                  {% endif %}
+                {% endfor %}
+
+              </div>
+            </div>
+
+            <div class="pagination-wrapper">
+              {% if page_obj.has_previous %}
+                <a class="prev page-numbers"
+                   href="?page={{ page_obj.previous_page_number }}">Prev</a>
+              {% endif %}
+
+              {% if page_obj.has_next %}
+                <a class="next page-numbers"
+                   href="?page={{ page_obj.next_page_number }}">Next</a>
+              {% endif %}
+            </div>
+
+          {% else %}
+          {% endif %}
+          <!-- End of pagination -->
+
+        </div>
+      {% else %}
+        <h4 style="color: red">There are no topics in service!</h4>
+      {% endif %}
+    </div>
+
+    <button onclick="goToTop()" id="btnGoToTop" title="Go to top">Go to top
+      👆
+    </button>
+
+  </section>
+  <!-- -------- END Features w/ pattern background & stats & rocket -------- -->
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}
+
+  <script src="{{ ASSETS_ROOT }} /js/plugins/countup.min.js"></script>
+  <script src="{{ ASSETS_ROOT }} /js/soft-design-system.min.js?v=1.0.1"
+          type="text/javascript"></script>
+
+  <!-- "Go to top" button -->
+  <script>
+      function goToTop() {
+          window.scrollTo({
+              top: 0,
+              behavior: "smooth"
+          });
+      }
+
+      window.onscroll = function () {
+          scrollFunction();
+      };
+
+      function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+              document.getElementById("btnGoToTop").style.display = "block";
+          } else {
+              document.getElementById("btnGoToTop").style.display = "none";
+          }
+      }
+  </script>
+
+  <!-- Search -->
+  <script>
+      function searchTopics() {
+          var input, filter, topics, topic, i, txtValue;
+          input = document.getElementById("searchInput");
+          filter = input.value.toUpperCase();
+          topics = document.getElementById("topicList").getElementsByClassName("card-profile");
+          for (i = 0; i < topics.length; i++) {
+              topic = topics[i].getElementsByTagName("h5")[0];
+              txtValue = topic.textContent || topic.innerText;
+              if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                  topics[i].style.display = "";
+              } else {
+                  topics[i].style.display = "none";
+              }
+          }
+      }
+  </script>
+
+  <script>
+      // get the element to animate
+      var element = document.getElementById('count-stats');
+      var elementHeight = element.clientHeight;
+
+      // listen for scroll event and call animate function
+
+      document.addEventListener('scroll', animate);
+
+      // check if element is in view
+      function inView() {
+          // get window height
+          var windowHeight = window.innerHeight;
+          // get number of pixels that the document is scrolled
+          var scrollY = window.scrollY || window.pageYOffset;
+          // get current scroll position (distance from the top of the page to the bottom of the current viewport)
+          var scrollPosition = scrollY + windowHeight;
+          // get element position (distance from the top of the page to the bottom of the element)
+          var elementPosition = element.getBoundingClientRect().top + scrollY + elementHeight;
+
+          // is scroll position greater than element position? (is element in view?)
+          if (scrollPosition > elementPosition) {
+              return true;
+          }
+
+          return false;
+      }
+
+      var animateComplete = true;
+
+      // animate element when it is in view
+      function animate() {
+
+          // is element in view?
+          if (inView()) {
+              if (animateComplete) {
+                  if (document.getElementById('state1')) {
+                      const countUp = new CountUp('state1', document.getElementById("state1").getAttribute("countTo"));
+                      if (!countUp.error) {
+                          countUp.start();
+                      } else {
+                          console.error(countUp.error);
+                      }
+                  }
+                  if (document.getElementById('state2')) {
+                      const countUp1 = new CountUp('state2', document.getElementById("state2").getAttribute("countTo"));
+                      if (!countUp1.error) {
+                          countUp1.start();
+                      } else {
+                          console.error(countUp1.error);
+                      }
+                  }
+                  if (document.getElementById('state3')) {
+                      const countUp2 = new CountUp('state3', document.getElementById("state3").getAttribute("countTo"));
+                      if (!countUp2.error) {
+                          countUp2.start();
+                      } else {
+                          console.error(countUp2.error);
+                      }
+                      ;
+                  }
+                  animateComplete = false;
+              }
+          }
+      }
+
+      if (document.getElementById('typed')) {
+          var typed = new Typed("#typed", {
+              stringsElement: '#typed-strings',
+              typeSpeed: 90,
+              backSpeed: 90,
+              backDelay: 200,
+              startDelay: 500,
+              loop: true
+          });
+      }
+  </script>
+  <script>
+      if (document.getElementsByClassName('page-header')) {
+          window.addEventListener('scroll', function () {
+              var scrollPosition = window.pageYOffset;
+              var bgParallax = document.querySelector('.page-header');
+              var limit = bgParallax.offsetTop + bgParallax.offsetHeight;
+              if (scrollPosition > bgParallax.offsetTop && scrollPosition <= limit) {
+                  bgParallax.style.backgroundPositionY = (50 - 10 * scrollPosition / limit * 3) + '%';
+              } else {
+                  bgParallax.style.backgroundPositionY = '50%';
+              }
+          });
+      }
+  </script>
+
+{% endblock javascripts %}

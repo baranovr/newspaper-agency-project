@@ -1,57 +1,383 @@
-{% extends "base.html" %}
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title %} Newspapers {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block body_class %} about-us {% endblock body_class %}
 
 {% block content %}
-  <br>
-  <h1 class="display-4">
-    Newspaper List
-  </h1>
-  <h1>
-    <a style="float: right" href="{% url "newspaper:newspaper-create" %}">
-      Create
-    </a>
 
-    {% include "search_form.html" %}
-  </h1>
+  {% include "includes/navigation-transparent.html" %}
 
-  {% if newspaper_list %}
-    <table class="table">
-      <tr>
-        <th>ID</th>
-        <th>Title</th>
-        <th>Topic</th>
-        <th>Count of Publishers</th>
-        <th>Update</th>
-        <th>Delete</th>
-      </tr>
+  <link rel="stylesheet" type="text/css"
+        href="{% static 'assets/css/styles.css' %}">
 
-      {% for newspaper in newspaper_list %}
-        <tr>
-          <td>{{ newspaper.id }}</td>
-          <td>
-            <em>
-              <a href="{% url "newspaper:newspaper-detail" pk=newspaper.id %}">
-                {{ newspaper.title }}
-              </a>
-            </em>
-          </td>
-          <td>
-            {{ newspaper.topic.name }}
-          </td>
-          <td>{{ newspaper.publishers.count }}</td>
-          <td>
-            <a href="{% url "newspaper:newspaper-update" pk=newspaper.id%}">
-              <strong>Update</strong>
-            </a>
-          </td>
-          <td>
-            <a style="color: red" href="{% url "newspaper:newspaper-delete" pk=newspaper.id%}">
-              <strong>Delete</strong>
-            </a>
-          </td>
-        </tr>
-      {% endfor %}
-    </table>
-  {% else %}
-    <p style="color: red">There are no newspapers in taxi</p>
-  {% endif %}
-{% endblock %}
+  <!-- -------- START HEADER 7 w/ text and video ------- -->
+  <header class="bg-gradient-dark">
+    <div class="page-header section-height-75"
+         style="background-image: url('{{ ASSETS_ROOT }}/img/laptop-dark.jpg')">
+      <span class="mask bg-gradient-dark opacity-7"></span>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8 text-center mx-auto my-auto">
+            <h1 class="text-white">List of Newspapers</h1>
+            <p class="lead mb-4 text-white opacity-8">
+              Dive into a world of diverse perspectives with our extensive
+              collection of newspapers.
+              From local insights to global events, stay informed and
+              connected to the world around
+              you through our wide array of trusted publications.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="position-absolute w-100 z-index-1 bottom-0">
+        <svg class="waves" xmlns="http://www.w3.org/2000/svg"
+             xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 40"
+             preserveAspectRatio="none" shape-rendering="auto">
+          <defs>
+            <path id="gentle-wave"
+                  d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"/>
+          </defs>
+          <g class="moving-waves">
+            <use xlink:href="#gentle-wave" x="48" y="-1"
+                 fill="rgba(255,255,255,0.40"/>
+            <use xlink:href="#gentle-wave" x="48" y="3"
+                 fill="rgba(255,255,255,0.35)"/>
+            <use xlink:href="#gentle-wave" x="48" y="5"
+                 fill="rgba(255,255,255,0.25)"/>
+            <use xlink:href="#gentle-wave" x="48" y="8"
+                 fill="rgba(255,255,255,0.20)"/>
+            <use xlink:href="#gentle-wave" x="48" y="13"
+                 fill="rgba(255,255,255,0.15)"/>
+            <use xlink:href="#gentle-wave" x="48" y="16"
+                 fill="rgba(255,255,255,1"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </header>
+  <!-- -------- END HEADER 7 w/ text and video ------- -->
+
+  <!-- -------- START Features w/ pattern background & stats & rocket -------- -->
+  <section
+      class="pt-sm-8 pb-5 position-relative bg-gradient-dark overflow-hidden">
+    <div class="position-absolute w-100 z-inde-1 top-0 mt-n3">
+      <svg width="100%" viewBox="0 -2 1920 157" version="1.1"
+           xmlns="http://www.w3.org/2000/svg"
+           xmlns:xlink="http://www.w3.org/1999/xlink">
+        <title>wave-down</title>
+        <g id="Page-1" stroke="none" stroke-width="1" fill="none"
+           fill-rule="evenodd">
+          <g id="Artboard" fill="#FFFFFF" fill-rule="nonzero">
+            <g id="wave-down">
+              <path
+                  d="M0,60.8320331 C299.333333,115.127115 618.333333,111.165365 959,47.8320321 C1299.66667,-15.5013009 1620.66667,-15.2062179 1920,47.8320331 L1920,156.389409 L0,156.389409 L0,60.8320331 Z"
+                  id="Path-Copy-2"
+                  transform="translate(960.000000, 78.416017) rotate(180.000000) translate(-960.000000, -78.416017) "></path>
+            </g>
+          </g>
+        </g>
+      </svg>
+    </div>
+
+    <div class="container">
+      <a href="{% url "newspaper:newspaper-create" %}">
+        <button class="btn btn-outline-success"
+                style="float: right; margin-right: 15px; margin-top: 30px;font-size: 20px; padding: 10px 20px;">
+          Create
+        </button>
+      </a>
+
+      <div class="row">
+        <div class="col-md-8 text-left mb-5 mt-5">
+          <h3 class="text-white z-index-1 position-relative">Newspapers</h3>
+          <p class="text-white opacity-8 mb-0">Here you can see all the
+            newspapers we have.</p>
+          <br>
+          <!-- Search Form -->
+          <div class="row mb-3">
+            <div class="col-md-8">
+              <input type="text" id="searchInput" class="form-control"
+                     placeholder="Search by title..."
+                     oninput="searchNewspapers()">
+            </div>
+          </div>
+          <!-- End of Search Form -->
+
+        </div>
+      </div>
+
+      {% if newspaper_list %}
+        <div class="container">
+          <div class="row justify-content-center" id="newspaperList">
+            {% for newspaper in newspaper_list %}
+              <div class="col-lg-6 col-12 mb-4">
+                <div class="card card-profile overflow-hidden">
+                  <div class="row">
+                    <div class="col-lg-8 col-md-6 col-12 ps-lg-0 my-auto">
+                      <div class="card-body">
+                        <h5 class="mb-0">
+                          <strong>Title: </strong>{{ newspaper.title }}</h5>
+                        <h6 class="text-info">
+                          <strong>Corresponding
+                            topic:</strong> {{ newspaper.topic.name }}
+                        </h6>
+                        <p class="mb-0">Publication
+                          date: {{ newspaper.published_date }}</p>
+                        <hr>
+                        <a href="{% url "newspaper:newspaper-detail" pk=newspaper.id %}"
+                           class="text-success icon-move-right">
+                          View details
+                          <i class="fas fa-arrow-right text-sm ms-1"></i>
+                        </a>
+                        <hr>
+                        <a href="{% url "newspaper:newspaper-update" pk=newspaper.id %}">
+                          <button type="button" class="btn btn-info">Update
+                          </button>
+                        </a>
+                        <a href="{% url "newspaper:newspaper-delete" pk=newspaper.id %}">
+                          <button type="button" class="btn btn-warning"
+                                  style="margin-left: 10px">Delete
+                          </button>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      {% else %}
+        <h4 style="color: red">There are no newspapers in service!</h4>
+        <br>
+        <br>
+        <br>
+      {% endif %}
+    </div>
+
+    <!-- Pagination links -->
+    {% if is_paginated %}
+      <div class="pagination-wrapper">
+        <div class="pagination">
+          {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+              <li class="page-numbers current"><a class="page-link"
+                                                  href="#">{{ num }}</a></li>
+            {% else %}
+              <li class="page-numbers"><a class="page-link"
+                                          href="?page={{ num }}">{{ num }}</a>
+              </li>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="pagination-wrapper">
+        {% if page_obj.has_previous %}
+          <a class="prev page-numbers"
+             href="?page={{ page_obj.previous_page_number }}">Prev</a>
+        {% endif %}
+
+        {% if page_obj.has_next %}
+          <a class="next page-numbers"
+             href="?page={{ page_obj.next_page_number }}">Next</a>
+        {% endif %}
+      </div>
+
+    {% else %}
+    {% endif %}
+
+    <button onclick="goToTop()" id="btnGoToTop" title="Go to top">Go to top
+      👆
+    </button>
+    <br>
+  </section>
+  <!-- -------- END Features w/ pattern background & stats & rocket -------- -->
+
+  <!-- -------- START PRE-FOOTER 1 w/ SUBSCRIBE BUTTON AND IMAGE ------- -->
+  <section class="my-5 pt-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 m-auto">
+          <h4>Write your review</h4>
+          <p class="mb-4">
+            You can write a review or suggestions on how
+            we can make our agency more convenient and informative.
+          </p>
+          <div class="row">
+            <div class="col-8">
+              <div class="input-group">
+                <input type="text" class="form-control mb-sm-0"
+                       placeholder="Write here...">
+              </div>
+            </div>
+            <div class="col-4 ps-0">
+              <button type="button"
+                      class="btn btn-success mb-0 h-100 position-relative z-index-2"
+                      onclick="showMessage()">Submit
+              </button>
+            </div>
+          </div>
+
+          <script>
+              function showMessage() {
+                  alert("Your review has been submitted");
+              }
+          </script>
+        </div>
+
+        <div class="col-md-5 ms-auto">
+          <div class="position-relative">
+            <img class="max-width-50 w-100 position-relative z-index-2"
+                 src="{{ ASSETS_ROOT }}/img/illustrations/sign-up.png">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}
+
+  <script src="{{ ASSETS_ROOT }} /js/plugins/countup.min.js"></script>
+  <script src="{{ ASSETS_ROOT }} /js/soft-design-system.min.js?v=1.0.1"
+          type="text/javascript"></script>
+
+  <script>
+      function goToTop() {
+          window.scrollTo({
+              top: 0,
+              behavior: "smooth"
+          });
+      }
+
+      window.onscroll = function () {
+          scrollFunction();
+      };
+
+      function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+              document.getElementById("btnGoToTop").style.display = "block";
+          } else {
+              document.getElementById("btnGoToTop").style.display = "none";
+          }
+      }
+  </script>
+
+  <script>
+      function searchNewspapers() {
+          var input = document.getElementById("searchInput").value.toLowerCase();
+          var newspapers = document.getElementsByClassName("card-body");
+          for (var i = 0; i < newspapers.length; i++) {
+              var title = newspapers[i].getElementsByTagName("h5")[0].innerText.toLowerCase();
+              if (title.indexOf(input) > -1) {
+                  newspapers[i].parentNode.parentNode.style.display = "";
+              } else {
+                  newspapers[i].parentNode.parentNode.style.display = "none";
+              }
+          }
+      }
+  </script>
+
+  <script>
+      // get the element to animate
+      var element = document.getElementById('count-stats');
+      var elementHeight = element.clientHeight;
+
+      // listen for scroll event and call animate function
+
+      document.addEventListener('scroll', animate);
+
+      // check if element is in view
+      function inView() {
+          // get window height
+          var windowHeight = window.innerHeight;
+          // get number of pixels that the document is scrolled
+          var scrollY = window.scrollY || window.pageYOffset;
+          // get current scroll position (distance from the top of the page to the bottom of the current viewport)
+          var scrollPosition = scrollY + windowHeight;
+          // get element position (distance from the top of the page to the bottom of the element)
+          var elementPosition = element.getBoundingClientRect().top + scrollY + elementHeight;
+
+          // is scroll position greater than element position? (is element in view?)
+          if (scrollPosition > elementPosition) {
+              return true;
+          }
+
+          return false;
+      }
+
+      var animateComplete = true;
+
+      // animate element when it is in view
+      function animate() {
+
+          // is element in view?
+          if (inView()) {
+              if (animateComplete) {
+                  if (document.getElementById('state1')) {
+                      const countUp = new CountUp('state1', document.getElementById("state1").getAttribute("countTo"));
+                      if (!countUp.error) {
+                          countUp.start();
+                      } else {
+                          console.error(countUp.error);
+                      }
+                  }
+                  if (document.getElementById('state2')) {
+                      const countUp1 = new CountUp('state2', document.getElementById("state2").getAttribute("countTo"));
+                      if (!countUp1.error) {
+                          countUp1.start();
+                      } else {
+                          console.error(countUp1.error);
+                      }
+                  }
+                  if (document.getElementById('state3')) {
+                      const countUp2 = new CountUp('state3', document.getElementById("state3").getAttribute("countTo"));
+                      if (!countUp2.error) {
+                          countUp2.start();
+                      } else {
+                          console.error(countUp2.error);
+                      }
+                      ;
+                  }
+                  animateComplete = false;
+              }
+          }
+      }
+
+      if (document.getElementById('typed')) {
+          var typed = new Typed("#typed", {
+              stringsElement: '#typed-strings',
+              typeSpeed: 90,
+              backSpeed: 90,
+              backDelay: 200,
+              startDelay: 500,
+              loop: true
+          });
+      }
+  </script>
+  <script>
+      if (document.getElementsByClassName('page-header')) {
+          window.addEventListener('scroll', function () {
+              var scrollPosition = window.pageYOffset;
+              var bgParallax = document.querySelector('.page-header');
+              var limit = bgParallax.offsetTop + bgParallax.offsetHeight;
+              if (scrollPosition > bgParallax.offsetTop && scrollPosition <= limit) {
+                  bgParallax.style.backgroundPositionY = (50 - 10 * scrollPosition / limit * 3) + '%';
+              } else {
+                  bgParallax.style.backgroundPositionY = '50%';
+              }
+          });
+      }
+  </script>
+
+{% endblock javascripts %}

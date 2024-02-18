@@ -18,11 +18,21 @@ from django.contrib import admin
 from django.urls import path, include
 
 from newspaper.views import (
-    index, TopicListView, NewspaperListView, RedactorListView,
-    TopicCreateView, TopicUpdateView, TopicDeleteView, NewspaperDetailView,
-    NewspaperCreateView, NewspaperUpdateView, NewspaperDeleteView,
-    RedactorDetailView, RedactorUpdateView, RedactorCreateView,
-    RedactorDeleteView,
+    index,
+    TopicListView,
+    NewspaperListView,
+    RedactorListView,
+    TopicCreateView,
+    TopicUpdateView,
+    TopicDeleteView,
+    NewspaperDetailView,
+    NewspaperCreateView,
+    NewspaperUpdateView,
+    NewspaperDeleteView,
+    RedactorDetailView,
+    RedactorUpdateView,
+    RedactorCreateView,
+    RedactorDeleteView
 )
 
 urlpatterns = [

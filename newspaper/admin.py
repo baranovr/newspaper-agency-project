@@ -27,4 +27,6 @@ class NewspaperAdmin(admin.ModelAdmin):
     ordering = ["title", ]
 
 
-admin.site.register(Topic)
+@admin.register(Topic)
+class TopicAdmin(admin.ModelAdmin):
+    pass
