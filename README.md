@@ -57,6 +57,13 @@ $ python manage.py migrate
 ```
 <br />
 
+> Collect static files
+
+```bash
+$ python manage.py collectstatic
+```
+<br />
+
 > Start the app
 
 ```bash
@@ -85,6 +92,14 @@ $ python manage.py makemigrations
 $ python manage.py migrate
 ```
 
+<br />
+
+
+> Collect static files
+
+```bash
+$ python manage.py collectstatic
+```
 <br />
 
 > Start the app

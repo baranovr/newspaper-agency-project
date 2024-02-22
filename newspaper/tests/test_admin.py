@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.test import TestCase, Client
 from django.urls import reverse
 
-from ..admin import RedactorAdmin, NewspaperAdmin
+from newspaper.admin import RedactorAdmin, NewspaperAdmin
 from newspaper.models import Redactor, Newspaper
 
 

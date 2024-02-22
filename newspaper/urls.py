@@ -40,14 +40,14 @@ urlpatterns = [
     path("__debug__/", include("debug_toolbar.urls")),
     path("", index, name="index"),
     path("topics/", TopicListView.as_view(), name="topic-list"),
-    path("topics/create", TopicCreateView.as_view(), name="topic-create"),
+    path("topics/create/", TopicCreateView.as_view(), name="topic-create"),
     path(
-        "topics/<int:pk>/update",
+        "topics/<int:pk>/update/",
         TopicUpdateView.as_view(),
         name="topic-update"
     ),
     path(
-        "topics/<int:pk>/delete",
+        "topics/<int:pk>/delete/",
         TopicDeleteView.as_view(),
         name="topic-delete"
     ),
@@ -93,7 +93,7 @@ urlpatterns = [
         name="redactor-create"
     ),
     path(
-        "redactors/<int:pk>/delete",
+        "redactors/<int:pk>/delete/",
         RedactorDeleteView.as_view(),
         name="redactor-delete"
     )
