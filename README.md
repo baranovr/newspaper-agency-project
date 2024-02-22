@@ -15,7 +15,8 @@ Topic does not depend on other models, the `Newspaper` model has a dependence on
 
 Here you can you see the database structure:
 
-![image](https://private-user-images.githubusercontent.com/138402384/302129213-7a57e301-8671-4776-9e8f-0b9838376740.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MDgyNjY3MDQsIm5iZiI6MTcwODI2NjQwNCwicGF0aCI6Ii8xMzg0MDIzODQvMzAyMTI5MjEzLTdhNTdlMzAxLTg2NzEtNDc3Ni05ZThmLTBiOTgzODM3Njc0MC5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjQwMjE4JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI0MDIxOFQxNDI2NDRaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1mMmMwYzNjMTE4NGNiMjdmNDNmMjcwYzU5MGU0YTFkMzUzZThmOTJjYWNhNjQ4MDExMGQ1YTI0MjM2NTdiYzc2JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCZhY3Rvcl9pZD0wJmtleV9pZD0wJnJlcG9faWQ9MCJ9.t4EymEhJShcs1Bm1DqrnZMQ-H26vyC-y0htNEQCI05Y)
+![db structure](https://github.com/baranovr/newspaper-agency-project/assets/138402384/c8f7503d-9430-499c-9727-c9fbe4a8f174)
+
 <br>
 <br>
 <h3>The project also has a customized backend using [Django Soft UI Design](https://github.com/app-generator/django-soft-ui-design)</h3>
