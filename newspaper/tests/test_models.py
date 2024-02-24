@@ -1,8 +1,9 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
-from datetime import date
 
 from newspaper.models import Newspaper, Topic
+
+from datetime import date
 
 
 class ModelTest(TestCase):

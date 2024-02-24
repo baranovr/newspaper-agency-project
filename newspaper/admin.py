@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+
 from newspaper.models import Redactor, Newspaper, Topic
 
 

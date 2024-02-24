@@ -11,7 +11,6 @@ from newspaper.forms import (
     NewspaperSearchForm,
     RedactorSearchForm
 )
-
 from newspaper.models import Newspaper, Topic, Redactor
 
 

@@ -1,11 +1,10 @@
-from datetime import date
-
 from django.contrib.auth.models import AbstractUser
-
 from django.db import models
 from django.urls import reverse
 
 from newspaper_agency_project import settings
+
+from datetime import date
 
 
 class Topic(models.Model):
