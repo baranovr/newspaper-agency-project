@@ -20,10 +20,6 @@ class Topic(models.Model):
 class Redactor(AbstractUser):
     years_of_experience = models.IntegerField(null=True, blank=True)
 
-    class Meta:
-        verbose_name = "redactor"
-        verbose_name_plural = "redactors"
-
     def __str__(self):
         return f"{self.first_name} {self.last_name} ({self.username})"
 
