@@ -7,8 +7,8 @@ django-crispy-forms==2.1
 django-debug-toolbar==4.3.0
 django-environ==0.11.2
 environ==1.0
-flake8==7.0.0
 flake8-quotes==3.4.0
+flake8==7.0.0
 flake8-variables-names==0.0.6
 gunicorn==21.2.0
 login==0.0.6
