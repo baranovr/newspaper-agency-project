@@ -28,40 +28,79 @@
           <div class="card overflow-hidden mb-5">
             <div class="row">
               <div class="col-lg-7">
-                <form role="form" class="p-3" id="contact-form" method="post">
-                  <div class="card-header px-4">
 
-                    <h5>
-                      {% if object %}
-                        Here you can update information about
-                        <em>{{ redactor.username }}</em> 👇
-                      {% else %}
-                        You can create a new publisher by filling out the
-                        fields below 👇
-                      {% endif %}
-                    </h5>
+                {% if object %}
 
-                  </div>
-                  <div class="card-body pt-1">
-                    <div class="row">
-                      <div class="col-md-6 text-left">
+                  {% if redactor == user or user.is_superuser %}
+                    <form role="form" class="p-3" id="contact-form"
+                          method="post">
+                      <div class="card-header px-4">
+                        {% if not user.is_superuser %}
+                          <h5>Here you can update information about you 👇</h5>
+                        {% else %}
+                          <h5>Here you can update information
+                            about {{ redactor.username }} 👇</h5>
+                        {% endif %}
+                        <div class="card-body pt-1">
+                          <div class="row">
+                            <div class="col-md-6 text-left">
 
-                        <form action="" method="post" novalidate>
-                          {% csrf_token %}
-                          {{ form|crispy }}
-                          <input class="btn btn-round btn-info" type="submit"
-                                 value="{{ object|yesno:"Update,Create" }}">
-                        </form>
+                              <form action="" method="post" novalidate>
+                                {% csrf_token %}
+                                {{ form|crispy }}
+                                <input class="btn btn-round btn-info"
+                                       type="submit"
+                                       value="{{ object|yesno:"Update,Create" }}">
+                              </form>
 
-                        <button onclick="goBack()"
-                                class="btn btn-round btn-secondary">
-                          Go Back
-                        </button>
-
+                              <button onclick="goBack()"
+                                      class="btn btn-round btn-secondary">
+                                Go Back
+                              </button>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                </form>
+                    </form>
+                  {% else %}
+                    <h5 style="color: brown; margin: 20px">
+                      Only superusers can update information about other
+                      publishers!
+                    </h5>
+                    <button onclick="goBack()"
+                            class="btn btn-round btn-secondary"
+                            style="margin-left: 5%">
+                      Go Back
+                    </button>
+                  {% endif %}
+
+                {% else %}
+                  <form role="form" class="p-3" id="contact-form" method="post">
+                      <div class="card-header px-4">
+                        <h5>You can create a new publisher by filling out the fields below 👇</h5>
+                        <div class="card-body pt-1">
+                          <div class="row">
+                            <div class="col-md-6 text-left">
+
+                              <form action="" method="post" novalidate>
+                                {% csrf_token %}
+                                {{ form|crispy }}
+                                <input class="btn btn-round btn-info"
+                                       type="submit"
+                                       value="{{ object|yesno:"Update,Create" }}">
+                              </form>
+
+                              <button onclick="goBack()"
+                                      class="btn btn-round btn-secondary">
+                                Go Back
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                {% endif %}
+
               </div>
               <div class="col-lg-5 position-relative bg-cover px-0"
                    style="background-image: url('{{ ASSETS_ROOT }}/img/curved-images/curved5.jpg')">

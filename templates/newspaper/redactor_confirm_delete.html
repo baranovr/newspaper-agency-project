@@ -25,18 +25,24 @@
                 class="card d-flex blur justify-content-center p-4 shadow-lg my-sm-0 my-sm-6 mt-8 mb-5">
               <div class="text-center">
 
-                <h3 class="text-gradient text-dark">Publisher Delete</h3>
-                <p class="mb-0">
-                <h5 style="color: red">Are you sure you want to delete the
-                  publisher<br>{{ redactor }}?</h5>
-                </p>
-
-                <form action="" method="post" novalidate>
-                  {% csrf_token %}
-                  <input type="submit" value="Delete" class="btn btn-danger">
-                </form>
-                <button onclick="goBack()" class="btn btn-secondary">Go Back
-                </button>
+                {% if not user.is_superuser %}
+                  <h4 style="color: brown">Only superusers can delete publishers!</h4>
+                  <br>
+                  <button onclick="goBack()" class="btn btn-secondary">Go Back
+                  </button>
+                {% else %}
+                  <h3 class="text-gradient text-dark">Publisher Delete</h3>
+                    <p class="mb-0">
+                    <h5 style="color: red">Are you sure you want to delete the
+                      publisher<br>{{ redactor }}?</h5>
+                    </p>
+                    <form action="" method="post" novalidate>
+                      {% csrf_token %}
+                      <input type="submit" value="Delete" class="btn btn-danger">
+                    </form>
+                    <button onclick="goBack()" class="btn btn-secondary">Go Back
+                    </button>
+                {% endif %}
 
               </div>
             </div>

@@ -91,61 +91,158 @@
       <div class="container">
         <div class="row" id="redactorList">
           {% for redactor in redactor_list %}
-            <div class="col-12 mx-auto">
-              <div class="row py-lg-3 py-5">
-                <div
-                    class="col-lg-7 col-md-4 z-index-2 position-relative px-md-5 px-sm-5 mt-sm-0 mt-4"
-                    style="border: 1px solid #ccc; padding: 20px; margin: 20px;">
+            {% if redactor == request.user %}
+              <!-- Display the current user first in the list -->
+              <div class="col-12 mx-auto">
+                <div class="row py-lg-3 py-5">
                   <div
-                      class="d-flex justify-content-between align-items-center mb-2">
-                    {% if redactor.first_name and redactor.last_name %}
-                      <div class="mb-4">
-                        <h4 class="mb-0">
-                          <strong>First
-                            name:</strong> {{ redactor.first_name }}
+                      class="col-lg-7 col-md-4 z-index-2 position-relative px-md-5 px-sm-5 mt-sm-0 mt-4"
+                      style="border: 1px solid #ccc; padding: 20px; margin: 20px;">
+                    <div
+                        class="d-flex justify-content-between align-items-center mb-2">
+
+                      {% if not redactor.is_superuser %}
+                        <div class="mb-4">
+                          <h4 class="mb-0">
+                            <a style="color: #66d432;border: 2px solid #66d432; padding: 3px; margin-left: 5px">Me</a>
+                            <br>
+                            <br>
+                            <strong>First
+                              name:</strong> {{ redactor.first_name }}
+                            <br>
+                            <strong>Last
+                              name:</strong> {{ redactor.last_name }}
+                          </h4>
+                        </div>
+                      {% else %}
+                        <h5 class="mb-0"><strong>Username:</strong>
+                          <em>{{ redactor.username }}</em>
+                          <a style="color: #66d432; border: 2px solid #66d432; padding: 3px; margin-left: 5px">Me</a>
                           <br>
-                          <strong>Last name:</strong> {{ redactor.last_name }}
-                        </h4>
+                        </h5><br>
+                      {% endif %}
+
+                      <div class="d-block">
+                        <a href="{% url "newspaper:redactor-update" pk=redactor.id %}">
+                          <button type="button" class="btn btn-info">
+                            Update
+                          </button>
+                        </a>
+                        <a href="{% url "newspaper:redactor-delete" pk=redactor.id %}">
+                          <button type="button" class="btn btn-warning">
+                            Delete
+                          </button>
+                        </a>
                       </div>
-                    {% else %}
-                      <h5 class="mb-0"><strong>Username:</strong>
-                        <em>{{ redactor.username }}</em></h5><br>
+                    </div>
+
+                    {% if not redactor.is_superuser %}
+                      <div class="mb-4">
+                        <h5 class="mb-0" style="color: #252f40">
+                          <strong>Username: </strong>
+                          <em>{{ redactor.username }}</em>
+                        </h5>
+                      </div>
                     {% endif %}
-                    <div class="d-block">
-                      <a href="{% url "newspaper:redactor-update" pk=redactor.id %}">
-                        <button type="button" class="btn btn-info">
-                          Update
-                        </button>
-                      </a>
-                      <a href="{% url "newspaper:redactor-delete" pk=redactor.id %}">
-                        <button type="button" class="btn btn-warning">
-                          Delete
-                        </button>
-                      </a>
-                    </div>
-                  </div>
-                  {% if redactor.first_name and redactor.last_name %}
-                    <div class="mb-4">
-                      <h5 class="mb-0" style="color: #252f40">
-                        <strong>Username: </strong>
-                        <em>{{ redactor.username }}</em>
-                      </h5>
-                    </div>
+
+                  {% if redactor.is_superuser %}
+                    <h5 class="mb-0"
+                        style="color: red">
+                      <strong>SUPERUSER</strong></h5>
+                    <br>
                   {% endif %}
-                  <p class="text-lg mb-0" style="color: black">Joining
-                    date:</p>
-                  <p class="text-lg mb-0">{{ redactor.date_joined }}</p>
-                  <p>
-                  <p style="color: #7928CA">ID: {{ redactor.id }}</p>
-                  <a href="{% url "newspaper:redactor-detail" pk=redactor.id %}"
-                     class="text-info icon-move-right">View details
-                    <i class="fas fa-arrow-right text-sm ms-1"></i>
-                  </a>
-                  </p>
+
+                    <p class="text-lg mb-0" style="color: black">Joining
+                      date:</p>
+                    <p class="text-lg mb-0">{{ redactor.date_joined }}</p>
+                    <p>
+                    <p style="color: #7928CA">ID: {{ redactor.id }}</p>
+                    <a href="{% url "newspaper:redactor-detail" pk=redactor.id %}"
+                       class="text-info icon-move-right">View details
+                      <i class="fas fa-arrow-right text-sm ms-1"></i>
+                    </a>
+                  </div>
                 </div>
               </div>
-            </div>
+            {% endif %}
+
           {% endfor %}
+
+          <!-- Display other users -->
+          {% for redactor in redactor_list %}
+
+            {% if redactor != request.user %}
+              <div class="col-12 mx-auto">
+                <div class="row py-lg-3 py-5">
+                  <div
+                      class="col-lg-7 col-md-4 z-index-2 position-relative px-md-5 px-sm-5 mt-sm-0 mt-4"
+                      style="border: 1px solid #ccc; padding: 20px; margin: 20px">
+                    <div
+                        class="d-flex justify-content-between align-items-center mb-2">
+
+                      {% if not redactor.is_superuser %}
+                        <div class="mb-4">
+                          <h4 class="mb-0">
+                            <strong>First
+                              name:</strong> {{ redactor.first_name }}
+                            <br>
+                            <strong>Last
+                              name:</strong> {{ redactor.last_name }}
+                          </h4>
+                        </div>
+                      {% else %}
+                        <h5 class="mb-0"><strong>Username:</strong>
+                          <em>{{ redactor.username }} </em>
+                        </h5>
+                        <br>
+                      {% endif %}
+
+                      <div class="d-block">
+                        <a href="{% url "newspaper:redactor-update" pk=redactor.id %}">
+                          <button type="button" class="btn btn-info">
+                            Update
+                          </button>
+                        </a>
+                        <a href="{% url "newspaper:redactor-delete" pk=redactor.id %}">
+                          <button type="button" class="btn btn-warning">
+                            Delete
+                          </button>
+                        </a>
+                      </div>
+                    </div>
+
+                    {% if not redactor.is_superuser %}
+                      <div class="mb-4">
+                        <h5 class="mb-0" style="color: #252f40">
+                          <strong>Username: </strong>
+                          <em>{{ redactor.username }}</em>
+                        </h5>
+                      </div>
+                    {% endif %}
+
+                    {% if redactor.is_superuser %}
+                      <h5 class="mb-0"
+                          style="color: red">
+                        <strong>SUPERUSER</strong></h5>
+                      <br>
+                    {% endif %}
+
+                    <p class="text-lg mb-0" style="color: black">Joining
+                      date:</p>
+                    <p class="text-lg mb-0">{{ redactor.date_joined }}</p>
+                    <p>
+                    <p style="color: #7928CA">ID: {{ redactor.id }}</p>
+                    <a href="{% url "newspaper:redactor-detail" pk=redactor.id %}"
+                       class="text-info icon-move-right">View details
+                      <i class="fas fa-arrow-right text-sm ms-1"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+
+          {% endfor %}
+
         </div>
       </div>
     {% else %}
