@@ -182,9 +182,12 @@ $ python manage.py createsuperuser
    |    |-- registration/
    |         |-- login.html                 # Login page
    |
+   |-- staticfiles/
+   |    |-- .gitkeep
+   |
    |-- .gitignore                           # File with ignored file types to git
    |-- manage.py                            # Start the app - Django default start script
-   |
+   |-- build.sh
    |-- requirements.txt                     # Development modules - SQLite storage
    |
    |-- .env                                 # Inject Configuration via Environment
