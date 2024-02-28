@@ -1,0 +1,229 @@
+{% extends 'layouts/base.html' %}
+{% load crispy_forms_filters %}
+
+{% block title %} Topics {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block body_class %} about-us {% endblock body_class %}
+
+{% block content %}
+
+  {% include "includes/navigation-transparent.html" %}
+
+  <!-- End Navbar -->
+  <!-- -------- START HEADER 7 w/ text and video ------- -->
+  <header class="bg-gradient-faded-dark">
+  </header>
+  <!-- -------- END HEADER 7 w/ text and video ------- -->
+
+  <!-- -------- START Features w/ pattern background & stats & rocket -------- -->
+  <section
+      class="pt-sm-8 pb-5 position-relative bg-gradient-faded-dark overflow-hidden">
+
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <div class="card overflow-hidden mb-5">
+            <div class="row">
+              <div class="col-lg-7">
+                <form role="form" class="p-3" id="contact-form" method="post">
+                  <div class="card-header px-4">
+
+                    <h5>
+                      {% if object %}
+                        Here you can update information about "
+                        {{ topic.name }}" 👇
+                      {% else %}
+                        You can create a new topic by filling out the fields
+                        below 👇
+                      {% endif %}
+                    </h5>
+
+                  </div>
+                  <div class="card-body pt-1">
+                    <div class="row">
+                      <div class="col-md-6 text-left">
+
+                        <form action="" method="post" novalidate>
+                          {% csrf_token %}
+                          {{ form|crispy }}
+                          <input class="btn btn-round btn-info" type="submit"
+                                 value="{{ object|yesno:"Update,Create" }}">
+                        </form>
+
+                        <button onclick="goBack()"
+                                class="btn btn-round btn-secondary">
+                          Go Back
+                        </button>
+
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="col-lg-5 position-relative bg-cover px-0"
+                   style="background-image: url('{{ ASSETS_ROOT }}/img/curved-images/curved5.jpg')">
+                <div
+                    class="position-absolute z-index-2 w-100 h-100 top-0 start-0 d-lg-block d-none">
+                  <img src="{{ ASSETS_ROOT }}/img/wave-1.svg"
+                       class="h-100 ms-n2">
+                </div>
+                <div
+                    class="z-index-2 text-center d-flex h-100 w-100 d-flex m-auto justify-content-center">
+                  <div class="mask bg-gradient-info opacity-9"></div>
+                  <div
+                      class="p-5 ps-sm-8 position-relative text-left my-auto z-index-2">
+                    <h3 class="text-white">
+                      {{ object|yesno:"Update,Create" }} Topic
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="position-absolute w-100 z-index-1 bottom-0">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg"
+           xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 40"
+           preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave"
+                d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"/>
+        </defs>
+        <g class="moving-waves">
+          <use xlink:href="#gentle-wave" x="48" y="-1"
+               fill="rgba(255,255,255,0.40"/>
+          <use xlink:href="#gentle-wave" x="48" y="3"
+               fill="rgba(255,255,255,0.35)"/>
+          <use xlink:href="#gentle-wave" x="48" y="5"
+               fill="rgba(255,255,255,0.25)"/>
+          <use xlink:href="#gentle-wave" x="48" y="8"
+               fill="rgba(255,255,255,0.20)"/>
+          <use xlink:href="#gentle-wave" x="48" y="13"
+               fill="rgba(255,255,255,0.15)"/>
+          <use xlink:href="#gentle-wave" x="48" y="16"
+               fill="rgba(255,255,255,1"/>
+        </g>
+      </svg>
+    </div>
+  </section>
+  <!-- -------- END Features w/ pattern background & stats & rocket -------- -->
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}
+
+  <script>
+      function goBack() {
+          window.history.back();
+      }
+  </script>
+
+  <script src="{{ ASSETS_ROOT }} /js/plugins/countup.min.js"></script>
+  <script src="{{ ASSETS_ROOT }} /js/soft-design-system.min.js?v=1.0.1"
+          type="text/javascript"></script>
+  <script>
+      // get the element to animate
+      var element = document.getElementById('count-stats');
+      var elementHeight = element.clientHeight;
+
+      // listen for scroll event and call animate function
+
+      document.addEventListener('scroll', animate);
+
+      // check if element is in view
+      function inView() {
+          // get window height
+          var windowHeight = window.innerHeight;
+          // get number of pixels that the document is scrolled
+          var scrollY = window.scrollY || window.pageYOffset;
+          // get current scroll position (distance from the top of the page to the bottom of the current viewport)
+          var scrollPosition = scrollY + windowHeight;
+          // get element position (distance from the top of the page to the bottom of the element)
+          var elementPosition = element.getBoundingClientRect().top + scrollY + elementHeight;
+
+          // is scroll position greater than element position? (is element in view?)
+          if (scrollPosition > elementPosition) {
+              return true;
+          }
+
+          return false;
+      }
+
+      var animateComplete = true;
+
+      // animate element when it is in view
+      function animate() {
+
+          // is element in view?
+          if (inView()) {
+              if (animateComplete) {
+                  if (document.getElementById('state1')) {
+                      const countUp = new CountUp('state1', document.getElementById("state1").getAttribute("countTo"));
+                      if (!countUp.error) {
+                          countUp.start();
+                      } else {
+                          console.error(countUp.error);
+                      }
+                  }
+                  if (document.getElementById('state2')) {
+                      const countUp1 = new CountUp('state2', document.getElementById("state2").getAttribute("countTo"));
+                      if (!countUp1.error) {
+                          countUp1.start();
+                      } else {
+                          console.error(countUp1.error);
+                      }
+                  }
+                  if (document.getElementById('state3')) {
+                      const countUp2 = new CountUp('state3', document.getElementById("state3").getAttribute("countTo"));
+                      if (!countUp2.error) {
+                          countUp2.start();
+                      } else {
+                          console.error(countUp2.error);
+                      }
+                      ;
+                  }
+                  animateComplete = false;
+              }
+          }
+      }
+
+      if (document.getElementById('typed')) {
+          var typed = new Typed("#typed", {
+              stringsElement: '#typed-strings',
+              typeSpeed: 90,
+              backSpeed: 90,
+              backDelay: 200,
+              startDelay: 500,
+              loop: true
+          });
+      }
+  </script>
+  <script>
+      if (document.getElementsByClassName('page-header')) {
+          window.addEventListener('scroll', function () {
+              var scrollPosition = window.pageYOffset;
+              var bgParallax = document.querySelector('.page-header');
+              var limit = bgParallax.offsetTop + bgParallax.offsetHeight;
+              if (scrollPosition > bgParallax.offsetTop && scrollPosition <= limit) {
+                  bgParallax.style.backgroundPositionY = (50 - 10 * scrollPosition / limit * 3) + '%';
+              } else {
+                  bgParallax.style.backgroundPositionY = '50%';
+              }
+          });
+      }
+  </script>
+
+{% endblock javascripts %}
+
+
+
+<section class="py-lg-7">
+
+</section>

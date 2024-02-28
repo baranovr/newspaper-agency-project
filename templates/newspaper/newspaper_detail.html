@@ -1,0 +1,117 @@
+{% extends 'layouts/base-presentation.html' %}
+{% load crispy_forms_filters %}
+
+{% block title %} Presentation {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block body_class %} index-page {% endblock body_class %}
+
+{% block content %}
+
+  <style>
+      .content-container {
+          max-width: 100%;
+          overflow-x: auto;
+          padding: 10px;
+      }
+  </style>
+
+  <header class="header-2">
+    <div class="page-header section-height-25 relative"
+         style="background-image: url('{{ ASSETS_ROOT }}/img/curved-images/curved.jpg')"></div>
+  </header>
+
+  <div class="container mt-sm-5">
+    <div
+        class="page-header section-height-50 my-sm-3 mb-3 border-radius-xl position-relative">
+      <span class="mask bg-gradient-dark"></span>
+      <img src="{{ ASSETS_ROOT }}/img/news.jpg" alt="News"
+           class="position-absolute top-0 end-0 border-radius-xl"
+           style="width: 250px; height: auto; margin: 5%">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 ms-lg-5" style="margin: 30px">
+            <h1 class="text-white">Newspaper Details</h1>
+            <h4 class="text-white mb-0">
+              <strong>Title: </strong>{{ newspaper.title }}</h4><br>
+            <p class="lead text-white opacity-8">
+              <strong>Corresponding topic: </strong>{{ newspaper.topic }}<br>
+              <strong>Publication
+                date: </strong>{{ newspaper.published_date }}<br>
+              <strong>Publishers ({{ newspaper.publishers.count }}): </strong>
+            </p>
+            <h4 style="color: black">
+              {% for redactor in newspaper.publishers.all %}
+                {{ redactor.username }},
+              {% endfor %}
+            </h4>
+            <br>
+            <h3 style="color: white">Content</h3>
+            <div class="bg-white p-4 border-radius-xl content-container"
+                 style="width: 100%">
+              <a style="color: black">{{ newspaper.content }}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <button onclick="goBack()" class="btn btn-round btn-secondary"
+          style="margin-left: 16%">
+    Go Back
+  </button>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}
+
+  <script>
+      function goBack() {
+          window.history.back();
+      }
+  </script>
+
+  <script src="{{ ASSETS_ROOT }}/js/plugins/countup.min.js"></script>
+  <script src="{{ ASSETS_ROOT }}/js/plugins/choices.min.js"></script>
+  <script src="{{ ASSETS_ROOT }}/js/plugins/rellax.min.js"></script>
+  <script src="{{ ASSETS_ROOT }}/js/plugins/tilt.min.js"></script>
+  <script src="{{ ASSETS_ROOT }}/js/plugins/choices.min.js"></script>
+
+  <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTTfWur0PDbZWPr7Pmq8K3jiDp0_xUziI"></script>
+  <script src="{{ ASSETS_ROOT }}/js/soft-design-system.min.js?v=1.0.1"
+          type="text/javascript"></script>
+  <script type="text/javascript">
+      if (document.getElementById('state1')) {
+          const countUp = new CountUp('state1', document.getElementById("state1").getAttribute("countTo"));
+          if (!countUp.error) {
+              countUp.start();
+          } else {
+              console.error(countUp.error);
+          }
+      }
+      if (document.getElementById('state2')) {
+          const countUp1 = new CountUp('state2', document.getElementById("state2").getAttribute("countTo"));
+          if (!countUp1.error) {
+              countUp1.start();
+          } else {
+              console.error(countUp1.error);
+          }
+      }
+      if (document.getElementById('state3')) {
+          const countUp2 = new CountUp('state3', document.getElementById("state3").getAttribute("countTo"));
+          if (!countUp2.error) {
+              countUp2.start();
+          } else {
+              console.error(countUp2.error);
+          }
+          ;
+      }
+  </script>
+
+{% endblock javascripts %}
